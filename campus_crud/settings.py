@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'campus_crud.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'campus-crud',
+        'NAME': 'django-relationships',
         # windows users
         # 'USER': 'postgres',
         # 'PASSWORD': 'your password'

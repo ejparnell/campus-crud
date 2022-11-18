@@ -1,18 +1,19 @@
 from django.shortcuts import render, get_object_or_404
-from library.serializers import BookSerializer
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import Book
+from ..models.book import Book
+from ..serializers import BookSerializer, BookReadSerializer
 
 # Create your views here.
 #localhost:3000/books/ get post
 class BooksView(APIView):
     """View class for books/ for viewing all and creating"""
+    serializer_class = BookSerializer
     def get(self, request):
         books = Book.objects.all()
-        serializer = BookSerializer(books, many=True)
+        serializer = BookReadSerializer(books, many=True)
         return Response({'books': serializer.data})
 
     def post(self, request):
@@ -26,9 +27,10 @@ class BooksView(APIView):
 #localhost:3000/books/:id get delete update
 class BookDetailView(APIView):
     """View class for books/:pk for viewing a single book, updating a single book, or removing a single book"""
+    serializer_class = BookSerializer
     def get(self, request, pk):
         book = get_object_or_404(Book, pk=pk)
-        serializer = BookSerializer(book)
+        serializer = BookReadSerializer(book)
         return Response({'book': serializer.data})
 
     def patch(self, request, pk):
